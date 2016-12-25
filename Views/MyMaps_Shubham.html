@@ -14,31 +14,33 @@
 
     <div class="container">
         <div class="panel panel-default">
-            <div class="panel-body">
-                <br />
-                <div class="row txtMarginBottom">
-                    <div class="col-xs-2">
-                        <input type="text" placeholder="source" class="form-control" id="txtSource" />
+            <div class="panel-heading">
+                <div class="row txtMarginBottom text-right">
+                    <div class="col-xs-1">
+                        <img src="../Images/GoogleMap_Icon.png" style="height:50px;width:50px"/>
                     </div>
-                    <div class="col-xs-2" style="margin-left: 10px">
-                        <input type="text" placeholder="destination" class="form-control" id="txtDestination" />
+                    <div class="col-xs-6"></div>
+                    <div class="col-xs-2">
+                        <input type="text" placeholder="source" style="margin-top:10px" class="form-control" id="txtSource" />
+                    </div>
+                    <div class="col-xs-2">
+                        <input type="text" placeholder="destination" style="margin-top:10px" class="form-control" id="txtDestination" />
                     </div>
                     <div class="col-xs-1">
-                        <button type="button" id="btnSearch" class="btn btn-primary">Search</button>
-                    </div>
-                </div>
-                <br/>
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="row txtMarginBottom">
-                            <div class="col-xs-12" id="divMap" style="margin-left:10px;height: 400px; width: 98%">
-                            </div>
-                        </div>
+                        <button type="button" id="btnSearch" style="margin-top:10px" class="btn btn-primary">Search</button>
                     </div>
                 </div>
             </div>
+            <div class="panel-body">
+                <div class="row txtMarginBottom">
+                    <div class="col-xs-12" id="divMap" style="margin-left: 10px; height: 500px; width: 98%">
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer text-right">
+                <mark>Google Maps !</mark>
+            </div>
         </div>
-
     </div>
 
 </body>

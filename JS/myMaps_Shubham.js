@@ -67,7 +67,7 @@
         var map = new google.maps.Map($("#divMap")[0], {
             center: { lat: latitude, lng: longitude },
             scrollwheel: false,
-            zoom: 8
+            zoom: 15
         });
         return map;
     },
@@ -75,7 +75,6 @@
     InitializeMaps: function () {
         var me = myMaps;
         var map = me.CreateMap(21.1458, 79.0882);
-        
         
         var marker = new google.maps.Marker({ position: { lat: 21.1458, lng: 79.0882 } });
         marker.setMap(map);
