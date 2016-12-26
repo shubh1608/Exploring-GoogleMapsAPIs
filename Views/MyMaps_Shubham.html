@@ -17,23 +17,33 @@
             <div class="panel-heading">
                 <div class="row txtMarginBottom text-right">
                     <div class="col-xs-1">
-                        <img src="../Images/GoogleMap_Icon.png" style="height:50px;width:50px"/>
+                        <img src="../Images/GoogleMap_Icon.png" style="height: 50px; width: 50px" />
                     </div>
                     <div class="col-xs-6"></div>
                     <div class="col-xs-2">
-                        <input type="text" placeholder="source" style="margin-top:10px" class="form-control" id="txtSource" />
+                        <input type="text" placeholder="source" style="margin-top: 10px" class="form-control" id="txtSource" />
                     </div>
                     <div class="col-xs-2">
-                        <input type="text" placeholder="destination" style="margin-top:10px" class="form-control" id="txtDestination" />
+                        <input type="text" placeholder="destination" style="margin-top: 10px" class="form-control" id="txtDestination" />
                     </div>
                     <div class="col-xs-1">
-                        <button type="button" id="btnSearch" style="margin-top:10px" class="btn btn-primary">Search</button>
+                        <button type="button" id="btnSearch" style="margin-top: 10px" class="btn btn-primary">Search</button>
                     </div>
                 </div>
             </div>
             <div class="panel-body">
                 <div class="row txtMarginBottom">
-                    <div class="col-xs-12" id="divMap" style="margin-left: 10px; height: 500px; width: 98%">
+                    <div class="col-xs-8" id="divMap" style="margin-left: 10px; height: 500px;width:65%">
+                    </div>
+                    <div class="col-xs-4" style="padding-right:1px">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Directions Panel</div>
+                            <div class="panel-body">
+                                <div id="divDirectionPanel"   style="height: 427px;overflow-y: scroll;">
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -41,6 +51,19 @@
                 <mark>Google Maps !</mark>
             </div>
         </div>
+    </div>
+
+    <div id="divInfoWindowContent" class="hidden">
+        <h5>Tag Note to this place : </h5>
+        <form>
+            <div class="form-group" style="width: 300px">
+                <textarea class="form-control" rows="5" id="txtNote"></textarea>
+                <div class="text-right" style="margin-top: 5px">
+                    <button class="btn btn-primary" onclick="SaveNote(event)" id="btnSave">Save</button>
+                    <button class="btn btn-primary" id="btnView">View Saved Notes</button>
+                </div>
+            </div>
+        </form>
     </div>
 
 </body>
