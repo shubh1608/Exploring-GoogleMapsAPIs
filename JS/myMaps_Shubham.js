@@ -46,7 +46,6 @@
 
     },
 
-
     FindRoute: function (origin, destination) {
         var me = myMaps;
 
@@ -119,7 +118,30 @@
         new google.maps.places.Autocomplete($("#txtSource")[0]).bindTo('bounds', map);
         new google.maps.places.Autocomplete($("#txtDestination")[0]).bindTo('bounds', map);
 
+        me.SetUserCurrentLocation();
+    },
+
+    SetUserCurrentLocation: function () {
+        var me = myMaps;
+        var infoWindow = new google.maps.InfoWindow({map: me.gblMapRef});
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+
+                infoWindow.setPosition(pos);
+                infoWindow.setContent('Your Current Location');
+                me.gblMapRef.setCenter(pos);
+            }, function() {
+                
+            });
+        } else {
+            
+        }
     }
+    
 }
 
 $(function () {
