@@ -1,5 +1,5 @@
 ﻿var myMaps = {
-    gblMapRef:null,
+    gblMapRef: null,
     Init: function () {
         var me = myMaps;
         me.InitializeMaps();
@@ -18,10 +18,10 @@
             me.PlaceMarker(event.latLng);
         });
 
-        
+
     },
 
-    
+
 
     PlaceMarker: function (location) {
         var me = myMaps;
@@ -39,7 +39,7 @@
             //marker.setMap(null);
             var infowindow = new google.maps.InfoWindow({
                 content: $("#divInfoWindowContent").html(),
-                maxWidth:300
+                maxWidth: 300
             });
             infowindow.open(me.gblMapRef, marker);
         });
@@ -52,6 +52,8 @@
 
         var directionsService = new google.maps.DirectionsService();
         var directionsDisplay = new google.maps.DirectionsRenderer();
+        $("#divDirectionPanel").empty();
+        directionsDisplay.setPanel($("#divDirectionPanel")[0]);
         directionsDisplay.setMap(null);
         directionsDisplay.setMap(me.CreateMap(21.1458, 79.0882));
         var request = {
@@ -62,7 +64,6 @@
         directionsService.route(request, function (response, status) {
             if (status == 'OK') {
                 directionsDisplay.setDirections(response);
-                directionsDisplay.setPanel(document.getElementById('divDirectionPanel'));
             }
         });
         me.BindEvents();
@@ -129,6 +130,16 @@ $(function () {
 function SaveNote(event) {
     event.preventDefault();
     var jsonObj = {
-        
+
     };
 }
+
+function ViewSavedNote(event) {
+    event.preventDefault();
+    var jsonObj = {
+
+    };
+}
+
+
+
