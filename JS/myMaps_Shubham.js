@@ -1,5 +1,6 @@
 ﻿var myMaps = {
     gblMapRef: null,
+    curPosition: null,
     Init: function () {
         var me = myMaps;
         me.InitializeMaps();
@@ -26,14 +27,24 @@
             else if (id == "liShowCurLocatn")
                 me.ShowCurrentLocation("liShowCurLocatn");
             else if (id == "liSetCurLocAsSrc")
-                me.SetCurrentLocationAsSource("liShowCurLocatn");
+                me.SetCurrentLocationAsSource("liSetCurLocAsSrc");
 
         });
 
     },
 
-    DisplayDirectionPanel:function(){
-    
+    DisplayDirectionPanel: function (id) {
+        var me = myMaps;
+        if ($("#" + id + " span:first").css("display") == "none") {
+            $("#divMap").css("width", "65%");
+            $("#divOuterDirectionPanel").show();
+            $("#" + id).find("span").show();
+        } else {
+            $("#divOuterDirectionPanel").hide();
+            $("#divMap").css("width", "98%");
+            google.maps.event.trigger(me.gblMapRef, 'resize');
+            $("#" + id).find("span").hide();
+        }
     },
 
     ShowCurrentLocation: function (id) {
@@ -44,11 +55,12 @@
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
-                if (!$("#" + id+" span:first").is(":visible")) {
+                me.curPosition = pos;
+                var marker = new google.maps.Marker({ position: pos });
+                marker.setMap(me.gblMapRef);
+                me.gblMapRef.setCenter(pos);
+                if ($("#" + id + " span:first").css("display") == "none") {
                     $("#" + id).find("span").show();
-                    var marker = new google.maps.Marker({ position: pos });
-                    marker.setMap(me.gblMapRef);
-                    me.gblMapRef.setCenter(pos);
                 } else {
                     $("#" + id).find("span").hide();
                     marker.setMap(null);
@@ -61,7 +73,64 @@
         }
     },
 
-    SetCurrentLocationAsSource: function () {
+    SetCurrentLocationAsSource: function (id) {
+        var me = myMaps;
+        if ($("#" + id + " span:first").css("display") == "none") {
+            $("#" + id).find("span").show();
+            if (me.curPosition != null) {
+            var geocoder = new google.maps.Geocoder;
+            geocoder.geocode({ 'location': me.curPosition }, function (results, status) {
+                if (status === 'OK') {
+                    if (results[1]) {
+                        //map.setZoom(11);
+                        var marker = new google.maps.Marker({
+                            position: me.curPosition,
+                            map: me.gblMapRef
+                        });
+                        marker.setMap(me.gblMapRef);
+                        me.gblMapRef.setCenter(me.curPosition);
+                        $("#txtSource").val(results[1].formatted_address);
+                    } else {
+                        window.alert('No results found');
+                    }
+                }
+            });
+        } else {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    me.curPosition = pos;
+                    var geocoder = new google.maps.Geocoder;
+                    geocoder.geocode({ 'location': me.curPosition }, function (results, status) {
+                        if (status === 'OK') {
+                            if (results[1]) {
+                                //map.setZoom(11);
+                                var marker = new google.maps.Marker({
+                                    position: me.curPosition,
+                                    map: me.gblMapRef
+                                });
+                                marker.setMap(me.gblMapRef);
+                                me.gblMapRef.setCenter(me.curPosition);
+                                $("#txtSource").val(results[1].formatted_address);
+                            } else {
+                                window.alert('No results found');
+                            }
+                        }
+                    });
+                }, function () {
+
+                });
+            }
+        }
+        }else{
+            $("#" + id).find("span").hide();
+            $("#txtSource").val("");
+        }
+
+        
 
     },
 
@@ -161,7 +230,7 @@
         new google.maps.places.Autocomplete($("#txtDestination")[0]).bindTo('bounds', map);
 
     },
-    
+
 }
 
 $(function () {
