@@ -34,17 +34,17 @@
     },
 
     DisplayDirectionPanel: function (id) {
-        var me = myMaps;
-        if ($("#" + id + " span:first").css("display") == "none") {
-            $("#divMap").css("width", "65%");
-            $("#divOuterDirectionPanel").show();
-            $("#" + id).find("span").show();
-        } else {
-            $("#divOuterDirectionPanel").hide();
-            $("#divMap").css("width", "98%");
-            google.maps.event.trigger(me.gblMapRef, 'resize');
-            $("#" + id).find("span").hide();
-        }
+        //var me = myMaps;
+        //if ($("#" + id + " span:first").css("display") == "none") {
+        //    $("#divMap").css("width", "65%");
+        //    $("#divOuterDirectionPanel").show();
+        //    $("#" + id).find("span").show();
+        //} else {
+        //    $("#divOuterDirectionPanel").hide();
+        //    $("#divMap").css("width", "98%");
+        //    google.maps.event.trigger(me.gblMapRef, 'resize');
+        //    $("#" + id).find("span").hide();
+        //}
     },
 
     ShowCurrentLocation: function (id) {
@@ -174,6 +174,9 @@
         directionsService.route(request, function (response, status) {
             if (status == 'OK') {
                 directionsDisplay.setDirections(response);
+                $("#divMap").css("width", "65%");
+                $("#divOuterDirectionPanel").show();
+                $("#" + id).find("span").show();
             }
         });
         me.BindEvents();
