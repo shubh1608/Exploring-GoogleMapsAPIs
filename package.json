@@ -15,5 +15,15 @@
   "bugs": {
     "url": "https://github.com/shubh1608/Google-Maps-API/issues"
   },
-  "homepage": "https://github.com/shubh1608/Google-Maps-API#readme"
+  "homepage": "https://github.com/shubh1608/Google-Maps-API#readme",
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.16.1",
+    "express": "^4.15.0",
+    "express-session": "^1.15.1",
+    "mongodb": "^2.2.24",
+    "mongoose": "^4.8.4"
+  }
 }

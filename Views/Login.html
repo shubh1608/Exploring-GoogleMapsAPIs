@@ -1,0 +1,208 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-signin-client_id" content="73239032949-niqc27vp19qb0s2vpb8a2oakoh5a1j9k.apps.googleusercontent.com">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABLDygQJGwH-f7BjQzlDnDJ7bcSJuMA_M&libraries=geometry,places"></script>
+    <script src="../JS/login.js"></script>
+    <script src="../JS/commonFunctions.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" rel="stylesheet" />
+    <style>
+        body {
+           
+        }
+
+        .loginBtn {
+            box-sizing: border-box;
+            position: relative;
+            /* width: 13em;  - apply for fixed size */
+            margin: 0.2em;
+            padding: 0 15px 0 46px;
+            border: none;
+            text-align: left;
+            line-height: 34px;
+            white-space: nowrap;
+            border-radius: 0.2em;
+            font-size: 16px;
+            color: #FFF;
+        }
+
+            .loginBtn:before {
+                content: "";
+                box-sizing: border-box;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 34px;
+                height: 100%;
+            }
+
+            .loginBtn:focus {
+                outline: none;
+            }
+
+            .loginBtn:active {
+                box-shadow: inset 0 0 0 32px rgba(0,0,0,0.1);
+            }
+
+
+        /* Facebook */
+        .loginBtn--facebook {
+            background-color: #4C69BA;
+            background-image: linear-gradient(#4C69BA, #3B55A0);
+            /*font-family: "Helvetica neue", Helvetica Neue, Helvetica, Arial, sans-serif;*/
+            text-shadow: 0 -1px 0 #354C8C;
+        }
+
+            .loginBtn--facebook:before {
+                border-right: #364e92 1px solid;
+                background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/icon_facebook.png') 6px 6px no-repeat;
+            }
+
+            .loginBtn--facebook:hover,
+            .loginBtn--facebook:focus {
+                background-color: #5B7BD5;
+                background-image: linear-gradient(#5B7BD5, #4864B1);
+            }
+
+
+        /* Google */
+        .loginBtn--google {
+            /*font-family: "Roboto", Roboto, arial, sans-serif;*/
+            background: #DD4B39;
+        }
+
+            .loginBtn--google:before {
+                border-right: #BB3F30 1px solid;
+                background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/icon_google.png') 6px 6px no-repeat;
+            }
+
+            .loginBtn--google:hover,
+            .loginBtn--google:focus {
+                background: #E74B37;
+            }
+    </style>
+</head>
+<body>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog" style="margin-top: 100px; width: 380px">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="padding-bottom: 0px; padding-top: 0px">
+                    <div class="row">
+                        <div class="col-xs-10">
+                            <h3>Please Login</h3>
+                        </div>
+                        <div class="col-xs-1" style="margin-left: -10px">
+                            <img src="../Images/GoogleMap_Icon.png" style="height: 50px; width: 50px" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="wrapper">
+                        <div class="form-signin">
+                            <div class="input-group" style="margin-bottom: 10px">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <input type="text" class="form-control" id="txtUser" name="username" placeholder="Email Address" required="" autofocus="" />
+                            </div>
+                            <div class="input-group" style="margin-bottom: 10px">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                <input type="password" class="form-control" id="txtPassword" name="password" placeholder="Password" required="" />
+                            </div>
+                            <div class="row" style="margin-bottom: 10px">
+                                <div class="col-xs-6">
+                                    <button class="btn btn-md btn-success btn-block" id="btnLogin" type="submit">Sign In</button>
+                                </div>
+                                <div class="col-xs-6">
+                                    <button class="btn btn-md btn-success btn-block" id="btnRegister" type="submit">Sign Up</button>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom: 10px">
+                                <div class="col-xs-12">
+                                    <label style="margin-left: 42px">Or you can use below options to Sign In</label>
+                                </div>
+                            </div>
+
+
+                            <div class="row" style="margin-bottom: 0px">
+                                <!--<div class="col-xs-6">
+                                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                                </div>-->
+                                <div class="col-xs-12">
+                                    <button class="loginBtn loginBtn--facebook" style="width: 345px; text-align: center">
+                                        Login with Facebook
+                                    </button>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                                    <!--<button class="loginBtn loginBtn--google" data-onsuccess="onSignIn" style="width: 345px; text-align: center">
+                                        Login with Google
+                                    </button>-->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="padding-bottom: 5px; padding-top: 5px">
+
+                    <div class="row">
+                        <div class="col-xs-5" style="margin-left: -10px">
+                            <label class="checkbox">
+                                <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe">Remember me
+                            </label>
+                        </div>
+                        <div class="col-xs-2"></div>
+                        <div class="col-xs-5" style="margin-top: 10px; float: right">
+                            <a href="#">Forgot password?</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="loaderModal" role="dialog">
+        <div class="modal-dialog" style="margin-top: 300px; width: 82px; background-color: rgba(0,0,0,0)">
+            <div>
+                <div class="modal-body">
+                    <div class="loader"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="messageModal" role="dialog">
+        <div class="modal-dialog" style="margin-top: 200px; width: 450px">
+            <div class="modal-content">
+                <div class="modal-header" style="padding-bottom: 0px; padding-top: 0px">
+                    <div class="row">
+                        <div class="col-xs-10">
+                            <h3>Message</h3>
+                        </div>
+                        <div class="col-xs-1" style="margin-left: -10px">
+                            <img src="../Images/GoogleMap_Icon.png" style="height: 50px; width: 50px" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <font color="red" id="divMessage"></font>
+                </div>
+                <div class="modal-footer" style="padding-bottom: 5px; padding-top: 5px">
+                    <input type="submit" id="btnCloseMsgModal" class="btn btn-primary" name="login" class="login loginmodal-submit" value="OK">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
