@@ -11,12 +11,11 @@
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABLDygQJGwH-f7BjQzlDnDJ7bcSJuMA_M&libraries=geometry,places"></script>
     <script src="../JS/login.js"></script>
     <script src="../JS/commonFunctions.js"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" rel="stylesheet" />
     <style>
         body {
-           
         }
 
         .loginBtn {
@@ -91,6 +90,36 @@
     </style>
 </head>
 <body>
+
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '2239875582903458',
+                cookie: true,
+                xfbml: true,
+                version: 'v2.8'
+            });
+            FB.AppEvents.logPageView();
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+    </script>
+    
+    <script>
+        function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log('User signed out.');
+            });
+        }
+    </script>
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog" style="margin-top: 100px; width: 380px">
 
@@ -111,7 +140,7 @@
                         <div class="form-signin">
                             <div class="input-group" style="margin-bottom: 10px">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                <input type="text" class="form-control" id="txtUser" name="username" placeholder="Email Address" required="" autofocus="" />
+                                <input type="text" class="form-control" id="txtUser" name="username" placeholder="UserName" required="" autofocus="" />
                             </div>
                             <div class="input-group" style="margin-bottom: 10px">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
@@ -133,22 +162,18 @@
 
 
                             <div class="row" style="margin-bottom: 0px">
-                                <!--<div class="col-xs-6">
-                                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-                                </div>-->
                                 <div class="col-xs-12">
-                                    <button class="loginBtn loginBtn--facebook" style="width: 345px; text-align: center">
+                                    <!--<button class="loginBtn loginBtn--facebook" style="width: 345px; text-align: center">
                                         Login with Facebook
-                                    </button>
-                                </div>
-                                <div class="col-xs-12">
-                                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-                                    <!--<button class="loginBtn loginBtn--google" data-onsuccess="onSignIn" style="width: 345px; text-align: center">
-                                        Login with Google
                                     </button>-->
+                                    <fb:login-button scope="public_profile,email" data-size="large" onlogin="checkLoginState();">
+                                    </fb:login-button>
+                                </div>
+                                <div class="col-xs-12" style="padding-left: 18px">
+                                    <div class="" id="my-signin2"></div>
                                 </div>
                             </div>
-
+                            <a href="#" onclick="signOut();">Sign out</a>
                         </div>
                     </div>
                 </div>

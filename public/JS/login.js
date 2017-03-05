@@ -16,7 +16,7 @@
         $("#btnLogin").on("click", function () {
             var errMsg = me.ValidateLoginInfo();
             if (errMsg === "") {
-                me.AttemptLogin();
+                me.AttemptLogin($.trim($("#txtUser").val()), $.trim($("#txtPassword").val()));
             } else {
                 showToastr('error', errMsg, 'Error');
             }
@@ -46,11 +46,11 @@
         return errMsg;
     },
 
-    AttemptLogin: function () {
+    AttemptLogin: function (userName,password) {
         var me = login;
         var data = {};
-        data.userName = $("#txtUser").val();
-        data.password = $("#txtPassword").val();
+        data.userName = userName;
+        data.password = password;
         showLoader();
         $.ajax({
             type: 'POST',
@@ -61,7 +61,7 @@
             success: function (data) {
                 hideLoader();
                 if (data == true) {
-                    Window.SessionUserName = $("#txtUser").val();
+                    window.SessionUserName = $("#txtUser").val();
                     window.location = "MyMaps";
                 } else {
                     showToastr('error',"Username not found.Click on Register to create an account.",'Error');
@@ -81,7 +81,7 @@
             contentType: 'application/json',
             timeout: 360000,
             data: JSON.stringify(data),
-            url: 'http://localhost:3000/registerUser',
+            url: '/registerUser',
             success: function (data) {
                 hideLoader();
                 if (data == true) {
@@ -92,20 +92,97 @@
             }
         });
     },
+
+    CreateGoogleUserSession: function (tokenId) {
+        var me = login;
+        var data = {};
+        data.tokenId = tokenId,
+        showLoader();
+        $.ajax({
+            type: 'Post',
+            contentType: 'application/json',
+            timeout: 360000,
+            data: JSON.stringify(data),
+            url: '/googleUserSession',
+            success: function (data) {
+                hideLoader();
+                window.location = "MyMaps";
+            }
+        });
+    },
+
+    CreateFBUserSession: function (userName) {
+        var me = login;
+        var data = {};
+        data.userName = userName,
+        console.log(userName);
+        showLoader();
+        $.ajax({
+            type: 'Post',
+            contentType: 'application/json',
+            timeout: 360000,
+            data: JSON.stringify(data),
+            url: '/facebookUserSession',
+            success: function (data) {
+                hideLoader();
+                window.location = "MyMaps";
+            }
+        });
+    }
 }
 
 $(function () {
     login.Init();
 })
 
-function onSignIn(googleUser) {
-    $("#myModal").modal("hide");
-    var profile = googleUser.getBasicProfile();
-    alert("inside google sign in.");
-    window.location = "MyMaps";
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+function onSuccess(googleUser) {
+    var profile = googleUser.getAuthResponse();
+    console.log('Logged in as: ' + googleUser.getAuthResponse().id_token);
+    login.CreateGoogleUserSession(profile.id_token);
 }
 
+function onFailure(error) {
+    console.log(error);
+}
+
+function renderButton() {
+    gapi.signin2.render('my-signin2', {
+        'scope': 'profile email',
+        'width': 345,
+        'height': 35,
+        'longtitle': true,
+        'theme': 'dark',
+        'onsuccess': onSuccess,
+        'onfailure': onFailure
+    });
+}
+
+function checkLoginState() {
+    FB.getLoginStatus(function (response) {
+        statusChangeCallback(response);
+    });
+}
+
+function statusChangeCallback(response) {
+    if (response.status === 'connected') {
+        testAPI();
+    } else if (response.status === 'not_authorized') {
+        showToastr('info','Please log into this app.','Information');
+    } else {
+        showToastr('info', 'Please log into Facebook.', 'Information');
+    }
+}
+
+function testAPI() {
+    var me = login;
+    FB.api('/me', function (response) {
+        me.CreateFBUserSession(response.name);
+    });
+}
+
+function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+        console.log('User signed out.');
+    });
+}

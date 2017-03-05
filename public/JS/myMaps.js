@@ -62,6 +62,7 @@
             success: function (data) {
                 hideLoader();
                 if (data == true) {
+                    //signOut();
                     window.SessionUserName = "";
                     window.location = "/";
                 }
@@ -274,6 +275,8 @@
 $(function () {
     myMaps.Init();
 });
+
+
 
 
 

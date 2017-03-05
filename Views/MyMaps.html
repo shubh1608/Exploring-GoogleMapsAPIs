@@ -11,7 +11,7 @@
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyABLDygQJGwH-f7BjQzlDnDJ7bcSJuMA_M&libraries=geometry,places"></script>
     <script src="../JS/myMaps.js"></script>
     <script src="../JS/commonFunctions.js"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" rel="stylesheet" />
     <style>
@@ -175,6 +175,16 @@
                 <button type="button" id="btnStartPolling" class="btn btn-primary">Start Polling</button>
                 <button type="button" id="btnLogout" class="btn btn-primary">Logout</button>
             </mark>
+        </div>
+    </div>
+
+    <div class="modal fade" id="loaderModal" role="dialog">
+        <div class="modal-dialog" style="margin-top: 300px; width: 82px; background-color: rgba(0,0,0,0)">
+            <div>
+                <div class="modal-body">
+                    <div class="loader"></div>
+                </div>
+            </div>
         </div>
     </div>
 

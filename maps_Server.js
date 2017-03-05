@@ -1,5 +1,6 @@
 var express = require('express');
 var mongoose = require('mongoose');
+var GoogleAuth = require('google-auth-library');
 var path = require('path');
 var bodyParser = require('body-parser');
 var UserAuth = require('./userAuthentication');
@@ -58,6 +59,40 @@ app.post('/registerUser', function (req, res) {
             res.send(true);
         }
     });
+});
+
+app.post('/googleUserSession', function (req, res) {
+    console.log("Inside google user session userName:" + req.body.userName);
+    sess = req.session;
+    sess.userName = req.body.userName;
+    res.send(true);
+    //console.log(req.body.tokenId);
+    //var auth = new GoogleAuth;
+    //var client = new auth.OAuth2('NRngF-ONAZm0ekItlPPvzjZY', '', '');
+    //console.log(client);
+    //client.verifyIdToken(
+    //    req.body.tokenId,
+    //    'NRngF-ONAZm0ekItlPPvzjZY',
+    //    // Or, if multiple clients access the backend:
+    //    //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3],
+    //    function (e, login) {
+    //        if (e)
+    //            console.error(e);
+    //        console.log(login);
+    //        var payload = login.getPayload();
+    //        var userid = payload['sub'];
+    //        console.log("UserID from google server:" + userid)
+    //        res.send(true);
+    //        // If request specified a G Suite domain:
+    //        //var domain = payload['hd'];
+    //    });
+});
+
+app.post('/facebookUserSession', function (req, res) {
+    console.log("Inside FB user session userName:"+req.body.userName);
+    sess = req.session;
+    sess.userName = req.body.userName;
+    res.send(true);
 });
 
 
