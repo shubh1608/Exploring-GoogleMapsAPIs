@@ -31,6 +31,11 @@
                 showToastr('error', errMsg, 'Error');
             }
         });
+
+        $("#linkforgotPassword").off("click");
+        $("#linkforgotPassword").on("click", function () {
+            window.location = "forgotPassword";
+        });
     },
 
     ValidateLoginInfo: function () {
@@ -148,8 +153,8 @@ function onFailure(error) {
 function renderButton() {
     gapi.signin2.render('my-signin2', {
         'scope': 'profile email',
-        'width': 345,
-        'height': 35,
+        'width': 130,
+        'height': 27,
         'longtitle': true,
         'theme': 'dark',
         'onsuccess': onSuccess,
