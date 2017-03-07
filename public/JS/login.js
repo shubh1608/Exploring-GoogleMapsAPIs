@@ -1,10 +1,10 @@
 ﻿var login = {
     Init: function () {
         var me = login;
-        $("#myModal").modal({
-            backdrop: 'static',
-            keyboard: false
-        });
+        //$("#myModal").modal({
+        //    backdrop: 'static',
+        //    keyboard: false
+        //});
         SetToastrOption();
         me.BindEvents();
     },

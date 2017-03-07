@@ -15,7 +15,7 @@ app.use(express.static(__dirname + '/public'));
 var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'shubhampatel1608@gmail.com',
+        user: 'distracteddev@gmail.com',
         pass: '8103856241'
     }
 });
@@ -110,9 +110,9 @@ app.get('/resetPassword', function (req, res) {
 app.post('/passwordResetMail', function (req, res) {
     var mailId = req.body.mailId;
     var mailOptions = {
-        from: 'shubhampatel1608@gmail.com', // sender address
+        from: 'distracteddev@gmail.com', // sender address
         to: mailId, // list of receivers
-        subject: 'NodeMailerTesting', // Subject line
+        subject: 'Password Reset Mail - GoogleMapsAPI', // Subject line
         text: '', // plain text body
         html: '<b><a href="http://localhost:3000/resetPassword">Click here to reset password</a></b>' // html body
     };
