@@ -1,16 +1,40 @@
 ﻿var login = {
     Init: function () {
         var me = login;
-        //$("#myModal").modal({
-        //    backdrop: 'static',
-        //    keyboard: false
-        //});
         SetToastrOption();
         me.BindEvents();
+        me.CheckRemembermeOpt();
+    },
+
+    CheckRemembermeOpt:function(){
+        var me = login;
+        if (localStorage.chkbx && localStorage.chkbx != '') {
+            $('#chkRememberMe').attr('checked', 'checked');
+            $('#txtUser').val(localStorage.usrname);
+            $('#txtPassword').val(localStorage.pass);
+        } else {
+            $('#chkRememberMe').removeAttr('checked');
+            $('#txtUser').val('');
+            $('#txtPassword').val('');
+        }
+
     },
 
     BindEvents: function () {
         var me = login;
+
+        $('#chkRememberMe').click(function() {
+            if ($('#chkRememberMe').is(':checked')) {
+                // save username and password
+                localStorage.usrname = $('#txtUser').val();
+                localStorage.pass = $('#txtPassword').val();
+                localStorage.chkbx = $('#chkRememberMe').val();
+            } else {
+                localStorage.usrname = '';
+                localStorage.pass = '';
+                localStorage.chkbx = '';
+            }
+        });
 
         $("#btnLogin").off("click");
         $("#btnLogin").on("click", function () {
@@ -65,8 +89,17 @@
             url: '/usersAuthentication',
             success: function (data) {
                 hideLoader();
-                if (data == true) {
-                    window.SessionUserName = $("#txtUser").val();
+                    if (data == true) {
+                        if ($('#chkRememberMe').is(':checked')) {
+                        // save username and password
+                        localStorage.usrname = $('#txtUser').val();
+                        localStorage.pass = $('#txtPassword').val();
+                        localStorage.chkbx = $('#chkRememberMe').val();
+                    } else {
+                        localStorage.usrname = '';
+                        localStorage.pass = '';
+                        localStorage.chkbx = '';
+                    }
                     window.location = "MyMaps";
                 } else {
                     showToastr('error',"Username not found.Click on Register to create an account.",'Error');

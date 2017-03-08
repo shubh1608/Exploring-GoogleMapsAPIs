@@ -62,8 +62,9 @@
             success: function (data) {
                 hideLoader();
                 if (data == true) {
-                    //signOut();
-                    window.SessionUserName = "";
+                    localStorage.usrname = '';
+                    localStorage.pass = '';
+                    localStorage.chkbx = '';
                     window.location = "/";
                 }
             }

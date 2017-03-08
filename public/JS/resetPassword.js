@@ -1,6 +1,7 @@
 ﻿var resetPassword = {
     Init: function () {
         var me = resetPassword;
+        SetToastrOption();
         me.BindEvents();
     },
 
@@ -8,8 +9,31 @@
         var me = resetPassword;
         $("#btnResetPassword").off("click");
         $("#btnResetPassword").on("click", function () {
-            me.ResetPassword();
+            var errMsg=me.ValidateEnteredInfo();
+            if(errMsg === ""){
+                me.ResetPassword();
+            }else{
+                showToastr('error', errMsg ,'Error');
+            }
         });
+    },
+
+    ValidateEnteredInfo:function(){
+        var me = resetPassword;
+        var errMsg="";
+        if($("#txtUserName").val() === ""){
+            errMsg="UserName field can't be empty."
+        }
+        if($("#txtNewPassword").val() === "" || $("#txtConfirmPassword").val()===""){
+            errMsg=errMsg == ""?errMsg:errMsg+"<br>";
+            errMsg=errMsg+"Password can't be empty.";
+        }else{
+            if($("#txtNewPassword").val() != $("#txtConfirmPassword").val()){
+                errMsg=errMsg == ""?errMsg:errMsg+"<br>";
+                errMsg=errMsg+"Password doesn't match with confirm password.";
+            }
+        }
+        return errMsg;
     },
 
     ResetPassword: function () {
