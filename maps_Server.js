@@ -29,7 +29,12 @@ app.get('/', function (req, res) {
 });
 
 app.get('/MyMaps', function (req, res) {
-    res.sendFile(path.join(__dirname + '/Views/MyMaps.html'));
+    sess = req.session;
+    if (sess.userName) {
+        res.sendFile(path.join(__dirname + '/Views/MyMaps.html'));
+    } else {
+        res.sendFile(path.join(__dirname + '/Views/Login.html'));
+    }
 });
 
 app.post('/usersAuthentication', function (req, res) {
