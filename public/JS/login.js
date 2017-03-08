@@ -100,6 +100,7 @@
                         localStorage.pass = '';
                         localStorage.chkbx = '';
                     }
+                    localStorage.SessionUserName=$('#txtUser').val();
                     window.location = "MyMaps";
                 } else {
                     showToastr('error',"Username not found.Click on Register to create an account.",'Error');

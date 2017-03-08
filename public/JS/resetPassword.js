@@ -16,6 +16,11 @@
                 showToastr('error', errMsg ,'Error');
             }
         });
+
+        $("#btnCancel").off("click");
+        $("#btnCancel").on("click", function () {
+            window.location="/";
+        });
     },
 
     ValidateEnteredInfo:function(){

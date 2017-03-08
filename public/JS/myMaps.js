@@ -6,6 +6,7 @@
     Init: function () {
         var me = myMaps;
         SetToastrOption();
+        $("#labelUserName").text("Welcome "+localStorage.SessionUserName);
         me.InitializeMaps();
         me.BindEvents();
     },
@@ -65,6 +66,7 @@
                     localStorage.usrname = '';
                     localStorage.pass = '';
                     localStorage.chkbx = '';
+                    localStorage.SessionUserName='';
                     window.location = "/";
                 }
             }

@@ -15,6 +15,11 @@
                 showToastr('error', 'Invalid Email Address.', 'Error');
             }
         });
+
+        $("#btnCancel").off("click");
+        $("#btnCancel").on("click", function () {
+            window.location="/";
+        });
     },
 
     IsValidEmailAddress:function(emailAddress) {

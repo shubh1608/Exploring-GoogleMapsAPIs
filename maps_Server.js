@@ -8,9 +8,7 @@ var UserAuth = require('./userAuthentication');
 var session = require('express-session');
 var app = express();
 app.use(session({ secret: 'ssshhhhh' }));
-
 app.use(bodyParser.json());
-
 app.use(express.static(__dirname + '/public'));
 var transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -23,7 +21,6 @@ var transporter = nodemailer.createTransport({
 var sess;
 app.get('/', function (req, res) {
     sess = req.session;
-    console.log(sess.userName + "in /");
     if (sess.userName) {
         res.sendFile(path.join(__dirname + '/Views/MyMaps.html'));
     } else {
@@ -32,14 +29,12 @@ app.get('/', function (req, res) {
 });
 
 app.get('/MyMaps', function (req, res) {
-    console.log("In");
     res.sendFile(path.join(__dirname + '/Views/MyMaps.html'));
 });
 
 app.post('/usersAuthentication', function (req, res) {
     sess = req.session;
     sess.userName = req.body.userName;
-    console.log(sess.userName + "in /usersAuthentication");
     UserAuth.find({
         UserName: req.body.userName,
         Password: req.body.password,
@@ -53,7 +48,6 @@ app.post('/usersAuthentication', function (req, res) {
 });
 
 app.post('/registerUser', function (req, res) {
-    console.log(req.body.userName + " " + req.body.password);
     var user = new UserAuth({ 'UserName': req.body.userName, 'Password': req.body.password });
     user.save(function (err, user) {
         if (err) {
@@ -66,7 +60,6 @@ app.post('/registerUser', function (req, res) {
 });
 
 app.post('/googleUserSession', function (req, res) {
-    console.log("Inside google user session userName:" + req.body.userName);
     sess = req.session;
     sess.userName = req.body.userName;
     res.send(true);
@@ -93,7 +86,6 @@ app.post('/googleUserSession', function (req, res) {
 });
 
 app.post('/facebookUserSession', function (req, res) {
-    console.log("Inside FB user session userName:" + req.body.userName);
     sess = req.session;
     sess.userName = req.body.userName;
     res.send(true);
@@ -120,7 +112,6 @@ app.post('/passwordResetMail', function (req, res) {
         if (error) {
             return console.log(error);
         }
-        console.log('Message %s sent: %s', info.messageId, info.response);
         res.send(true);
     });
 });
@@ -140,16 +131,11 @@ app.post('/resetPasswordInDataBase', function (req, res) {
     });
 });
 
-
-
-
-
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!')
 });
 
 app.get('/logout', function (req, res) {
-    console.log("Inside logout");
     req.session.destroy(function (err) {
         if (err) console.log(err);
         else res.send(true);
